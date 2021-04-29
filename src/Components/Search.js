@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
 
 class Search extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let text = this.text.value;
+    let path = `search/${text}`;
+    this.props.history.push(path);
+  };
+
   render() {
     return (
-      <form className='search-form'>
-        <input type='search' name='search' placeholder='Search' required />
+      <form className='search-form' onSubmit={this.handleSubmit}>
+        <input
+          type='search'
+          name='search'
+          placeholder='Search'
+          required
+          ref={(input) => (this.text = input)}
+        />
         <button type='submit' className='search-button'>
           <svg
             fill='#fff'

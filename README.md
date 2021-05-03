@@ -19,7 +19,7 @@ This assignment from Team Treehouse is to build an image gallery with search fea
 - To run the project you will need to first download the files to your local directory.
 - Move into the directory and install the npm modules with `npm install`
 - Before starting the server, you will first need to get a Flickr API key of your own. You can get this at [Flickr API](#https://www.flickr.com/services/api/misc.api_keys.html). (For more notes see 'Get a Flickr API Key' in the instructions below)
-- With the API key now referenced in the root directory as `config.js` you can run the project in developer mode with `npm run start`.
+- With the API key now referenced in the `/src` directory as `config.js` you can run the project in developer mode with `npm run start`.
 
 ## Instructions
 

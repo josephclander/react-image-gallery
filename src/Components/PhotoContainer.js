@@ -3,11 +3,14 @@ import Photo from './Photo';
 
 const PhotoContainer = (props) => {
   let output = props.data.map((photo) => <Photo data={photo} key={photo.id} />);
+  let hasPhotos = props.data.length > 0;
   return (
     <div className='photo-container'>
-      <h2>{props.title}</h2>
+      <h2 style={hasPhotos ? { color: '#A7EF4A' } : { color: '#F94E5E' }}>
+        {props.title}
+      </h2>
       <ul>
-        {props.data.length > 0 ? (
+        {hasPhotos ? (
           output
         ) : (
           <li className='not-found'>

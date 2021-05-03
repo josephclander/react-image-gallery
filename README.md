@@ -135,4 +135,4 @@ This assignment from Team Treehouse is to build an image gallery with search fea
 
 ## Notes from the Build
 
-[TBC]
+To practice utilising CSS skills particularly in React, a conditional inline style has been added to `PhotoContainer`. If there are photos available, the search title will show in 'success green` and if there are no available photos, it returns in 'failure red'.

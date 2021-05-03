@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import Search from './Components/Search';
 import Nav from './Components/Nav';
@@ -14,6 +14,7 @@ class App extends Component {
     dogsData: [],
     computersData: [],
     searchData: [],
+    title: '',
   };
 
   searchFlickr = (query) => {
@@ -21,7 +22,9 @@ class App extends Component {
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${query}&per_page=24&page=1&format=json&nojsoncallback=1`
       )
-      .then((data) => this.setState({ searchData: data.data.photos.photo }))
+      .then((data) =>
+        this.setState({ searchData: data.data.photos.photo, title: query })
+      )
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
@@ -57,47 +60,61 @@ class App extends Component {
       });
   }
 
+  // componentDidUpdate(prevProps) {
+  //   console.log('componentDidUpdate fired!');
+  //   const currentURL = window.location.pathname;
+  //   console.log(currentURL);
+  //   const regex = /^\/search\//gm;
+  //   const isSearch = regex.test(currentURL);
+  //   if (isSearch) {
+  //     const query = currentURL.slice(8);
+  //     console.log(query);
+  //   }
+  // }
+
   render() {
     return (
       <BrowserRouter>
         <div className='container'>
           <Search searchHandler={this.searchFlickr} />
           <Nav />
-          <Route exact path='/' render={() => <Redirect to='/cats' />} />
-          <Route
-            exact
-            path='/cats'
-            render={() => (
-              <PhotoContainer data={this.state.catsData} title='Cats' />
-            )}
-          />
-          <Route
-            exact
-            path='/dogs'
-            render={() => (
-              <PhotoContainer data={this.state.dogsData} title='Dogs' />
-            )}
-          />
-          <Route
-            exact
-            path='/computers'
-            render={() => (
-              <PhotoContainer
-                data={this.state.computersData}
-                title='Computers'
-              />
-            )}
-          />
-          <Route
-            exact
-            path='/search/:query'
-            render={() => (
-              <PhotoContainer
-                data={this.state.searchData}
-                title={this.state.searchQuery}
-              />
-            )}
-          />
+          <Switch>
+            <Route exact path='/' render={() => <Redirect to='/cats' />} />
+            <Route
+              exact
+              path='/cats'
+              render={() => (
+                <PhotoContainer data={this.state.catsData} title='Cats' />
+              )}
+            />
+            <Route
+              exact
+              path='/dogs'
+              render={() => (
+                <PhotoContainer data={this.state.dogsData} title='Dogs' />
+              )}
+            />
+            <Route
+              exact
+              path='/computers'
+              render={() => (
+                <PhotoContainer
+                  data={this.state.computersData}
+                  title='Computers'
+                />
+              )}
+            />
+            <Route
+              exact
+              path='/search/:query'
+              render={() => (
+                <PhotoContainer
+                  data={this.state.searchData}
+                  title={this.state.title}
+                />
+              )}
+            />
+          </Switch>
         </div>
       </BrowserRouter>
     );

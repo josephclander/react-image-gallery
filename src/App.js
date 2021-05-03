@@ -14,16 +14,22 @@ class App extends Component {
     dogsData: [],
     computersData: [],
     searchData: [],
+    isLoading: true,
     title: '',
   };
 
   searchFlickr = (query) => {
+    this.setState({ isLoading: true });
     axios
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${query}&per_page=24&page=1&format=json&nojsoncallback=1`
       )
       .then((data) =>
-        this.setState({ searchData: data.data.photos.photo, title: query })
+        this.setState({
+          searchData: data.data.photos.photo,
+          title: query,
+          isLoading: false,
+        })
       )
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
@@ -36,7 +42,9 @@ class App extends Component {
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=cats&per_page=24&page=1&format=json&nojsoncallback=1`
       )
-      .then((data) => this.setState({ catsData: data.data.photos.photo }))
+      .then((data) =>
+        this.setState({ catsData: data.data.photos.photo, isLoading: false })
+      )
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
@@ -45,7 +53,9 @@ class App extends Component {
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=dogs&per_page=24&page=1&format=json&nojsoncallback=1`
       )
-      .then((data) => this.setState({ dogsData: data.data.photos.photo }))
+      .then((data) =>
+        this.setState({ dogsData: data.data.photos.photo, isLoading: false })
+      )
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
@@ -54,7 +64,12 @@ class App extends Component {
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=computers&per_page=24&page=1&format=json&nojsoncallback=1`
       )
-      .then((data) => this.setState({ computersData: data.data.photos.photo }))
+      .then((data) =>
+        this.setState({
+          computersData: data.data.photos.photo,
+          isLoading: false,
+        })
+      )
       .catch((error) => {
         console.log('Error fetching and parsing data', error);
       });
@@ -78,43 +93,47 @@ class App extends Component {
         <div className='container'>
           <Search searchHandler={this.searchFlickr} />
           <Nav />
-          <Switch>
-            <Route exact path='/' render={() => <Redirect to='/cats' />} />
-            <Route
-              exact
-              path='/cats'
-              render={() => (
-                <PhotoContainer data={this.state.catsData} title='Cats' />
-              )}
-            />
-            <Route
-              exact
-              path='/dogs'
-              render={() => (
-                <PhotoContainer data={this.state.dogsData} title='Dogs' />
-              )}
-            />
-            <Route
-              exact
-              path='/computers'
-              render={() => (
-                <PhotoContainer
-                  data={this.state.computersData}
-                  title='Computers'
-                />
-              )}
-            />
-            <Route
-              exact
-              path='/search/:query'
-              render={() => (
-                <PhotoContainer
-                  data={this.state.searchData}
-                  title={this.state.title}
-                />
-              )}
-            />
-          </Switch>
+          {this.state.isLoading ? (
+            <h3>Loading...</h3>
+          ) : (
+            <Switch>
+              <Route exact path='/' render={() => <Redirect to='/cats' />} />
+              <Route
+                exact
+                path='/cats'
+                render={() => (
+                  <PhotoContainer data={this.state.catsData} title='Cats' />
+                )}
+              />
+              <Route
+                exact
+                path='/dogs'
+                render={() => (
+                  <PhotoContainer data={this.state.dogsData} title='Dogs' />
+                )}
+              />
+              <Route
+                exact
+                path='/computers'
+                render={() => (
+                  <PhotoContainer
+                    data={this.state.computersData}
+                    title='Computers'
+                  />
+                )}
+              />
+              <Route
+                exact
+                path='/search/:query'
+                render={() => (
+                  <PhotoContainer
+                    data={this.state.searchData}
+                    title={this.state.title}
+                  />
+                )}
+              />
+            </Switch>
+          )}
         </div>
       </BrowserRouter>
     );

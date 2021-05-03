@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Search from './Components/Search';
 import Nav from './Components/Nav';
 import PhotoContainer from './Components/PhotoContainer';
+import NotFound from './Components/NotFound';
 
 import axios from 'axios';
 import apiKey from './config';
@@ -132,6 +133,7 @@ class App extends Component {
                   />
                 )}
               />
+              <Route component={NotFound} />
             </Switch>
           )}
         </div>

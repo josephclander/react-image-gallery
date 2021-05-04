@@ -1,9 +1,15 @@
 import React from 'react';
 import Photo from './Photo';
+import { withRouter } from 'react-router-dom';
 
-const PhotoContainer = (props) => {
+const PhotoContainerSearch = (props) => {
   let output = props.data.map((photo) => <Photo data={photo} key={photo.id} />);
   let hasPhotos = props.data.length > 0;
+
+  let value = props.match.params.query;
+  if (props.title !== value) {
+    props.searchHandler(value);
+  }
 
   return (
     <div className='photo-container'>
@@ -29,4 +35,4 @@ const PhotoContainer = (props) => {
   );
 };
 
-export default PhotoContainer;
+export default withRouter(PhotoContainerSearch);

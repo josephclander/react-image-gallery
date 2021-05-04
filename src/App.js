@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Search from './Components/Search';
 import Nav from './Components/Nav';
 import PhotoContainer from './Components/PhotoContainer';
+import PhotoContainerSearch from './Components/PhotoContainerSearch';
 import NotFound from './Components/NotFound';
 
 import axios from 'axios';
@@ -139,10 +140,11 @@ class App extends Component {
                 exact
                 path='/search/:query'
                 render={() => (
-                  <PhotoContainer
+                  <PhotoContainerSearch
                     data={this.state.searchData}
                     title={this.state.title}
                     loading={this.state.isLoading}
+                    searchHandler={this.searchFlickr}
                   />
                 )}
               />

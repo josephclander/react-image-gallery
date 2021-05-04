@@ -6,11 +6,16 @@ const PhotoContainer = (props) => {
   let hasPhotos = props.data.length > 0;
   return (
     <div className='photo-container'>
-      <h2 style={hasPhotos ? { color: '#A7EF4A' } : { color: '#F94E5E' }}>
+      <h2
+        style={
+          hasPhotos && !props.loading
+            ? { color: '#A7EF4A' }
+            : { color: '#F94E5E' }
+        }>
         {props.title}
       </h2>
       <ul>
-        {hasPhotos ? (
+        {hasPhotos && !props.loading ? (
           output
         ) : (
           <li className='not-found'>

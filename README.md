@@ -1,6 +1,6 @@
-# React Gallery App - Treehouse Fullstack Degree
+# React Gallery App
 
-This assignment from Team Treehouse is to build an image gallery with search features using `create-react-app`. You will use the `fetch API` and `React Router` with the `Flickr API` to create this project.
+This assignment from Team Treehouse is to build an image gallery with search features using `create-react-app`. I use the `fetch API` and `React Router` with the `Flickr API` to create this project.
 
 ## Table of Contents
 
